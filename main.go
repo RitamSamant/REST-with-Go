@@ -48,13 +48,13 @@ func postBlogPage(w http.ResponseWriter, r *http.Request){
 
 func handleRequests(){
 
-	myRouter:=mux.NewRouter().StrictSlash(true)
+	router:=mux.NewRouter().StrictSlash(true)
 
-	myRouter.HandleFunc("/home", homePage).Methods("GET")
-	myRouter.HandleFunc("/home/blogPage", blogPage).Methods("GET")
-	myRouter.HandleFunc("/home/blogPage/add", postBlogPage).Methods("POST")
+	router.HandleFunc("/home", homePage).Methods("GET")
+	router.HandleFunc("/home/blogPage", blogPage).Methods("GET")
+	router.HandleFunc("/home/blogPage/add", postBlogPage).Methods("POST")
 
-	log.Fatal(http.ListenAndServe(":8081", myRouter))
+	log.Fatal(http.ListenAndServe(":8081", router))
 }
 
 func main(){
