@@ -2,6 +2,7 @@
 //an blog page
 //handle req function
 //main func - entry
+//Using gorilla mux
 
 package main
 
@@ -10,6 +11,7 @@ import(
 	"log"
 	"net/http"
 	"encoding/json"
+	"github.com/gorilla/mux"
 )
 
 type Blog struct {
@@ -39,11 +41,20 @@ func blogPage(w http.ResponseWriter, r *http.Request){
 	json.NewEncoder(w).Encode(blogs);
 
 }
+func postBlogPage(w http.ResponseWriter, r *http.Request){
+	fmt.Fprintf(w, "Post Blog Page")
+	fmt.Println("Endpoint Hit: postBlogPage")
+}
 
 func handleRequests(){
-	http.HandleFunc("/home", homePage)
-	http.HandleFunc("/home/blogPage", blogPage)
-	log.Fatal(http.ListenAndServe(":8081", nil))
+
+	myRouter:=mux.NewRouter().StrictSlash(true)
+
+	myRouter.HandleFunc("/home", homePage).Methods("GET")
+	myRouter.HandleFunc("/home/blogPage", blogPage).Methods("GET")
+	myRouter.HandleFunc("/home/blogPage/add", postBlogPage).Methods("POST")
+
+	log.Fatal(http.ListenAndServe(":8081", myRouter))
 }
 
 func main(){
