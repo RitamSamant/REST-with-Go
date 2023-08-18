@@ -15,9 +15,9 @@ import(
 )
 
 type Blog struct {
-	Title string `json:"Title`
-	Desc string `json:"desc"`
-	Content string `json:"content"`
+	Title string
+	Desc string
+	Content string 
 }
 
 type Blogs []Blog
